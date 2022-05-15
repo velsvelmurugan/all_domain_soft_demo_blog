@@ -1,0 +1,62 @@
+  body{
+    overflow: hidden;
+  } 
+/*homepage*/
+.modelatagtitle, .modelatagedit {
+	cursor: pointer;
+	text-decoration: none !important;
+}
+
+.modelatagedit {
+    float: left;
+    margin-right: 9px;
+}
+
+a.modelatagdelete {
+	cursor: pointer;
+	text-decoration: none !important;
+}
+
+.modtitle {
+	font-size: 20px;
+}
+
+.createmodtitle {
+	font-size: 20px;
+}
+
+.main_page_listing_btn {
+	margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.modal-header .close {
+    margin-top: -23px;
+}
+
+/*set default focus and hover outline to none*/
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: none;
+    outline-offset: -2px;
+}
+
+.blogdetailslist li {
+	list-style-type: none;
+	margin: 13px;
+}
+
+.modalbodywidthblogdetails {
+    width: 546px;
+ }
+
+ input#buttonsubmit {
+    margin: 28px 0px;
+}
+
+input.btn.btn-sm.btn-success.edit_btn_submit {
+    margin-top: 15px;
+}
+.container.table-responsive.main_page_listing {
+    margin-top: 87px;
+}
+ /*end*/

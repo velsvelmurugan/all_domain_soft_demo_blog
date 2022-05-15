@@ -1,0 +1,127 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>
+<div class="container table-responsive main_page_listing">
+<button type="button" class="btn btn-sm btn-primary main_page_listing_btn" data-toggle="modal" data-target="#createmodal">
+  Create New Blog
+</button>
+<table class="table table-striped table-bordered table-hover nowrap" id="table_id">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Blog ID</th>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">Blog Description</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+	<% @allblogs.each do |blog| %>
+	    <tr>
+	      <th scope="row"><%= blog.id%></th>
+	      <td><a class="modelatagtitle" data-toggle="modal" data-target="#<%= blog.id%>"><%= blog.title%></a></td>
+	      <td><%= blog.author_type%></td>
+	      <td><%= blog.blog_body%></td>
+	      <td><a class="modelatagedit btn btn-xs btn-success" data-toggle="modal" data-target="#edit<%= blog.id%>">Edit</a>
+	      	<%= button_to "Delete", home_path(blog), method: :delete  ,remote: true,:class=>"modelatagdelete btn btn-xs btn-danger", :form_class => "btn_delete"%></td>
+	      <!-- modal to view all details of blogs -->
+			  <div class="modal fade" id="<%= blog.id%>" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modalbodywidthblogdetails" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title modtitle" id="blogModalLabel">Blog Details</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			      	<ul class="blogdetailslist">
+	                    <li><b>Blog Title: </b><%= blog.title%></li>
+	                    <li><b>Blog Author: </b><%= blog.author_type%></li>
+	                    <li><b>Blog Description: </b><%= blog.blog_body%></li>
+	                    <li><b>Posted Date: </b><%= blog.created_at.strftime("#{blog.created_at.day.ordinalize} %B %Y") %></li>
+			      	</ul>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-xs btn-warning" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- modal view blog end -->
+		    <!-- modal to view all details of blogs -->
+			  <div class="modal fade" id="edit<%= blog.id%>" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modalbodywidthblogdetails" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title modtitle" id="blogModalLabel">Edit Blog Details</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+					<%= form_with model: blog, url: home_path(:id => blog.id), method: :patch, local: false, remote: true do |f| %>
+			              <div class="form-group">
+			                  <label class="form_edit_title" for="title">Blog Title</label>
+			                  <%= f.text_field :title, placeholder: blog.title, value: blog.title, class: "form-control mb-2 mr-sm-2 mb-sm-0", required: true%>
+			              </div>              
+			              <div class="form-group">
+			                  <%= f.label :blog_body, class: "form_edit_blog_body"  %>
+			                  <%= f.text_area :blog_body, placeholder: blog.blog_body, value: blog.blog_body, class: "form-control form-control-blog_body", required: true,:rows=>"15"   %>
+			              </div> 
+			              <div class="form-group">
+			                  <%= f.label :author_type, class: "form_edit_author_type"  %>
+							  <%= f.select(:author_type, [["User", "User"], ["Guest", "Guest"], ["Admin", "Admin"]], {:include_blank => "Select"}, {:class => "form-control"} ) %>
+			              </div> 
+			              <%= f.submit class: "btn btn-sm btn-success edit_btn_submit"%>
+					<% end %>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-xs btn-warning" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- modal edit blog end -->
+	    </tr>
+	<%end%>
+  </tbody>
+</table>
+</div>
+<!-- Modal for creating new blog-->
+<div class="modal fade" id="createmodal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title createmodtitle" id="createModalLabel">Add New Blog</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+		<%= form_tag('/home/createblog', remote: true) do %>
+		<%= fields_for 'one_blog' do |bl| %>
+		  <%= bl.label :title, 'Blog Title' %>
+		  <%= bl.text_field :title,:class=>"form-control" %> <br><br>
+		  <%= bl.label :author_type, 'Select Author Type' %>
+		  <%= bl.select(:author_type, [["User", "User"], ["Guest", "Guest"], ["Admin", "Admin"]], {:include_blank => "Select"}, {:class => "form-control"} ) %><br><br>
+		  <%= bl.label :blog_body, 'Blog Description' %>
+		  <%= bl.text_area :blog_body,:class=>"form-control",:rows=>"15"  %>
+		<% end %>
+		  <div><%= submit_tag("Save", :id=>"buttonsubmit", :class=>"submit_btn btn btn-sm btn-success", :name=>"submit") %></div>
+		<% end %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-xs btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal create blog end -->
+
+<script type="text/javascript">
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>

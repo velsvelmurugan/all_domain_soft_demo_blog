@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All Domain Soft Blogs</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="/externalassets/bootstrap.min.css">
+    <script src="/externalassets/jquery.min.js"></script>
+    <script src="/externalassets/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/externalassets/custom_style.css">
+    <link rel="stylesheet" href="/externalassets/navbar.css">
+  </head>
+  <body>
+    <%= render 'layouts/navigation/navbar_header' %>
+    <%= yield %>
+  </body>
+</html>

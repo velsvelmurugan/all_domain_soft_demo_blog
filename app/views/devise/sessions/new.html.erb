@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/externalassets/login.css">
+<div class="bg-img">
+</div>
+<div class="login-section">
+  <div class="container black_bg">
+    <div class="row">
+      <div class="col-md-12 bg-white">
+      <h4 class="login-title">Sign in</h4>
+        <div>
+          <%=  form_for(:user,url: session_path(:user)) do |f| %>
+          <%= f.email_field :email,:autocomplete => 'off',autofocus: true,class: 'form-control mb-4',placeholder: 'email' %>
+          <%= f.password_field  :password,:autocomplete => 'off', class: 'form-control',style:"margin-top: 40px;margin-bottom: 32px;",placeholder: 'password'  %>
+          <%= f.submit "Log in", class: 'btn btn-md btn-info login-button',style:"width: 23%;" %>
+            <p style=" margin-top: 24px;font-size: 15px;">
+            <span >
+            <a href="/users/sign_up">Sign up</a><br>
+            <!-- <a href="/users/password/new" style="">Forgot your password?</a><br>  -->
+            </span> 
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
