@@ -21,8 +21,9 @@
 	      <td><a class="modelatagtitle" data-toggle="modal" data-target="#<%= blog.id%>"><%= blog.title%></a></td>
 	      <td><%= blog.author_type%></td>
 	      <td><%= blog.blog_body%></td>
-	      <td><a class="modelatagedit btn btn-xs btn-success" data-toggle="modal" data-target="#edit<%= blog.id%>">Edit</a>
-	      	<%= button_to "Delete", home_path(blog), method: :delete  ,remote: true,:class=>"modelatagdelete btn btn-xs btn-danger", :form_class => "btn_delete"%></td>
+	      <td><a class="modelatagedit btn btn-xs btn-success" data-toggle="modal" data-target="#edit<%= blog.id%>">Edit</a><% if current_user.role == 1 %>
+					<%= button_to "Delete", home_path(blog), method: :delete  ,remote: true,:class=>"modelatagdelete btn btn-xs btn-danger", :form_class => "btn_delete"%>
+					<% end %></td>
 	      <!-- modal to view all details of blogs -->
 			  <div class="modal fade" id="<%= blog.id%>" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
 			  <div class="modal-dialog modalbodywidthblogdetails" role="document">
